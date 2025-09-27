@@ -15,6 +15,11 @@ pip install pyinstaller
 ```
 ----
 
+```Bash
+pip install requests
+```
+----
+
 ## 📁 Ընտրիր թղթապանակը CMD-ում
 
 ### ✅ Քայլ 2
