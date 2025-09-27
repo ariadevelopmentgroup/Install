@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ինչպես Python-ով գրված հավելվածը դարձնել EXE ֆայլ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+        }
+        .step-section {
+            border: 1px solid #bdc3c7;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .step-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .step-title span {
+            margin-right: 10px;
+            font-weight: bold;
+            color: #2980b9;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, monospace;
+            color: #c0392b;
+        }
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ddd;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="https://i.ibb.co/Xr7xT9G1/python-to-exe.png" alt="Python-ից EXE">
+
+    <h1>Ինչպես Python-ով գրված հավելվածը դարձնել EXE ֆայլ</h1>
+
+    <div class="step-section">
+        <h2>🛠️ Պայմաններ</h2>
+        <h3>✅ Քայլ 1</h3>
+        <p>1️⃣ <span class="highlight">Ունենալ տեղադրված Python (վերջին տարբերակ)</span></p>
+        <p>2️⃣ <span class="highlight">Տեղադրել PyInstaller-ը</span></p>
+        <pre><code>pip install pyinstaller</code></pre>
+    </div>
+
+    <hr>
+
+    <div class="step-section">
+        <h2>📁 Ընտրիր թղթապանակը CMD-ում</h2>
+        <h3>✅ Քայլ 2</h3>
+        <p><strong>Օրինակ, եթե քո Python ֆայլը գտնվում է</strong> <code>C:\Users\Desktop\Figma to Python</code> <strong>թղթապանակում, գրիր՝</strong></p>
+        <p><em>Սա կփոխի ընթացիկ դիրքը CMD-ում դեպի այդ թղթապանակը։</em></p>
+        <pre><code>cd C:\Users\Desktop\Figma2Python</code></pre>
+    </div>
+
+    <hr>
+
+    <div class="step-section">
+        <h2>⚙️ Հիմնական հրաման՝ *.exe* ֆայլ ստեղծելու համար</h2>
+        <h3>✅ Քայլ 3</h3>
+        <p><code>--onefile</code> - <strong>նշանակում է, որ ամեն ինչ կլինի մեկ</strong> <code>.exe</code> <strong>ֆայլում:</strong></p>
+        <p><code>main.py</code> - <strong>փոխարինիր քո հավելվածի հիմնական ֆայլով:</strong></p>
+        <pre><code>pyinstaller --onefile --windowed main.py</code></pre>
+    </div>
+
+    <hr>
+
+    <div class="step-section">
+        <h2>🎨 Եթե ուզում ես հավելվածին ավելացնել տարբերանշան (.ico)</h2>
+        <h3>✅ Քայլ 4</h3>
+        <p><code>logo.ico</code> - <strong>պետք է լինի նույն թղթապանակում։</strong></p>
+        <p><code>--windowed</code> <strong>կամ</strong> <code>--noconsole</code> - <strong>թաքցնում է կոնսոլը:</strong></p>
+        <pre><code>pyinstaller --onefile --windowed --icon=logo.ico main.py</code></pre>
+    </div>
+
+    <hr>
+
+    <div class="step-section">
+        <h2>📁 Արդյունք</h2>
+        <h3>✅ Քայլ 6</h3>
+        <p><strong>Գտիր</strong> <code>.exe</code> <strong>ֆայլը dist թղթապանակում։</strong></p>
+        <p><code>build</code> <strong>և</strong> <code>__pycache__</code> - <strong>թղթապանակները կարող ես ջնջել, եթե անհրաժեշտ չեն։</strong></p>
+    </div>
+
+</body>
+</html>
