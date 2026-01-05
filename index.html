@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--
 <html lang="hy">
 <head>
     <meta charset="UTF-8">
@@ -131,4 +131,149 @@
     </div>
 
 </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8">
+  <title>ARIA Converter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {font-family: Arial, sans-serif; margin:0; padding:0; background:#f4f4f4;}
+    header {background:#333; color:#fff; padding:15px; text-align:center;}
+    .container {max-width:900px; margin:auto; padding:20px;}
+    .tool-box {background:#fff; padding:20px; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,0.1);}
+    label {display:block; margin-top:10px;}
+    select, input[type=file], button {margin-top:10px; padding:8px; width:100%;}
+    footer {background:#222; color:#ccc; text-align:center; padding:15px; margin-top:30px;}
+    footer a {color:#00aaff; text-decoration:none;}
+    /* Responsive */
+    @media(max-width:768px){.container{padding:10px;}}
+    .admin-panel {display:none; background:#fff; padding:20px; margin-top:20px; border:1px solid #ccc;}
+    .hidden {display:none;}
+  </style>
+</head>
+<body>
+<header>
+  <h1>ARIA Converter</h1>
+</header>
+
+<div class="container">
+  <div class="tool-box">
+    <h2>Ֆայլի փոխակերպում</h2>
+    <input type="file" id="fileInput" />
+    <label for="formatSelect">Ընտրեք ֆորմատը</label>
+    <select id="formatSelect">
+      <option value="pdf2docx">PDF → DOCX</option>
+      <option value="pdf2png">PDF → PNG</option>
+      <option value="pdf2jpg">PDF → JPG</option>
+      <option value="pdf2xlsx">PDF → XLSX</option>
+      <option value="xlsx2pdf">XLSX → PDF</option>
+      <option value="xlsx2docx">XLSX → DOCX</option>
+      <option value="docx2xlsx">DOCX → XLSX</option>
+      <option value="ocrpdf">OCR PDF (HY/RU/EN)</option>
+    </select>
+    <button onclick="convertFile()">Փոխակերպել</button>
+    <div id="fileInfo"></div>
+    <button onclick="downloadZip()">Ներբեռնել ZIP</button>
+  </div>
+
+  <button onclick="showLogin()">Մուտք (Admin Panel)</button>
+
+  <div id="loginBox" class="hidden">
+    <h3>Admin Panel Login</h3>
+    <input type="text" id="username" placeholder="Մուտքանուն">
+    <input type="password" id="password" placeholder="Գաղտնաբառ">
+    <button onclick="adminLogin()">Մուտք գործել</button>
+    <div id="loginMsg"></div>
+  </div>
+
+  <div id="adminPanel" class="admin-panel">
+    <h2>Admin Panel</h2>
+    <p>Կառավարել գործիքը և արգելափակել IP հասցեներ</p>
+    <label>Արգելափակել IP</label>
+    <input type="text" id="ipBlock" placeholder="Օգտագործողի IP">
+    <select id="daysBlock">
+      <option value="1">1 օր</option>
+      <option value="3">3 օր</option>
+      <option value="5">5 օր</option>
+      <option value="7">7 օր</option>
+      <option value="10">10 օր</option>
+      <option value="15">15 օր</option>
+      <option value="30">30 օր</option>
+    </select>
+    <button onclick="blockIP()">Արգելափակել</button>
+    <div id="adminMsg"></div>
+  </div>
+</div>
+
+<footer>
+  Copyright © | <a href="https://github.com/ariadevelopmentgroup/AriaConverter" target="_blank">Aria Development Group</a> | Հեղինակային բոլոր իրավունքները պաշտպանված են:
+</footer>
+
+<script>
+  // SHA-512 hash check
+  async function sha512(str){
+    const buf = new TextEncoder().encode(str);
+    const hashBuffer = await crypto.subtle.digest("SHA-512", buf);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2,"0")).join("");
+  }
+
+  const storedUser = "ACAdmin";
+  const storedPassHash = "c7a4f..."; // այստեղ պետք է դրվի իրական SHA-512 hash
+
+  function showLogin(){
+    document.getElementById("loginBox").classList.toggle("hidden");
+  }
+
+  async function adminLogin(){
+    const u = document.getElementById("username").value;
+    const p = document.getElementById("password").value;
+    const phash = await sha512(p);
+    if(u===storedUser && phash===storedPassHash){
+      document.getElementById("adminPanel").style.display="block";
+      document.getElementById("loginMsg").innerText="Հաջող մուտք!";
+      // inactivity timer
+      setTimeout(()=>{logout();}, 5*60*1000);
+    } else {
+      document.getElementById("loginMsg").innerText="Սխալ տվյալներ!";
+    }
+  }
+
+  function logout(){
+    document.getElementById("adminPanel").style.display="none";
+    document.getElementById("loginMsg").innerText="Դուրս եք եկել համակարգից!";
+  }
+
+  function blockIP(){
+    const ip = document.getElementById("ipBlock").value;
+    const days = document.getElementById("daysBlock").value;
+    document.getElementById("adminMsg").innerText = "IP "+ip+" արգելափակված է "+days+" օրով.";
+    // այստեղ պետք է իրական backend API կանչվի
+  }
+
+  function convertFile(){
+    const file = document.getElementById("fileInput").files[0];
+    if(!file){alert("Ընտրեք ֆայլ"); return;}
+    document.getElementById("fileInfo").innerHTML =
+      "Ֆայլի անվանում: "+file.name+"<br>"+
+      "Չափս: "+(file.size/1024).toFixed(2)+" KB<br>"+
+      "Էջերի քանակ: (պահանջում է backend)<br>"+
+      "DPI: (պահանջում է backend)";
+    // այստեղ պետք է ուղարկվի backend API-ին
+  }
+
+  function downloadZip(){
+    alert("ZIP ներբեռնում (պահանջում է backend)");
+    // այստեղ պետք է backend-ից ստանալ ZIP blob
+  }
+</script>
+</body>
 </html>
+
+
+
+
